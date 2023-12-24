@@ -1,12 +1,72 @@
-import  { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaSearch, FaUser, FaCaretDown, FaShoppingCart } from "react-icons/fa";
 import Flex from "../../designLayouts/Flex";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { paginationItems } from "../../../constants";
+import authService from "../../../appwrite/auth";
+import toast, { Toaster } from "react-hot-toast";
+import LoadingBar from 'react-top-loading-bar';
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/authSlice";
 
 const HeaderBottom = () => {
+  //User Logged In or Not
+  const [data, setData] = useState("Log In!");
+  const [loggedIn, setloggedIn] = useState(false)
+  const fetchData = async () => {
+    try {
+      const userData = await authService.getCurrentUser();
+
+      if (userData) {
+        const firstName = getFirstName(userData.name);
+        const userName = "Hello ! " + firstName
+        setData(userName);
+        setloggedIn(true)
+        toast.success("Logged In Successful!!!")
+      } else {
+        setData(null);
+      }
+    } catch (error) {
+      console.error("Fetching data failed:", error);
+    }
+  };
+
+  // Function to extract the first name
+  const getFirstName = (fullName) => {
+    // Assuming names are separated by a space
+    const names = fullName.split(' ');
+
+    // Extract the first name
+    const firstName = names.length > 0 ? names[0] : '';
+
+    return firstName;
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  //End
+
+  //log out
+  const dispatch = useDispatch()
+  const [progress, setProgress] = useState(0);
+  const logoutHandler = async () => {
+    try {
+      setProgress(33);
+      await authService.logout();
+      dispatch(logout());
+      setProgress(100);
+      setData("Log In!")
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+  //end
+
+
   const products = useSelector((state) => state.orebiReducer.products);
   const [show, setShow] = useState(false);
   const [showUser, setShowUser] = useState(false);
@@ -38,14 +98,21 @@ const HeaderBottom = () => {
   }, [searchQuery]);
 
   return (
+    <>
+    <Toaster/>
+    <LoadingBar
+        color='#f11946'
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
     <div className="w-full bg-[#F5F5F3] relative">
       <div className="max-w-container mx-auto">
         <Flex className="flex flex-col lg:flex-row items-start lg:items-center justify-between w-full px-4 pb-4 lg:pb-0 h-full lg:h-24">
 
-        <div className="flex gap-4 mt-2 lg:mt-0 items-center pr-6 cursor-pointer relative text-gray-50">
-          .
-        </div>
-          
+          <div className="flex gap-4 mt-2 lg:mt-0 items-center pr-6 cursor-pointer relative text-gray-50">
+            .
+          </div>
+
           <div className="relative  w-full lg:w-[600px] h-[50px] text-base text-primeColor bg-white flex items-center gap-2 justify-between px-6 rounded-xl ">
             <input
               className="flex-1 h-full outline-none placeholder:text-[#C4C4C4] placeholder:text-[14px]"
@@ -99,39 +166,42 @@ const HeaderBottom = () => {
             )}
           </div>
           <div className="flex gap-4 mt-2 lg:mt-0 items-center pr-6 cursor-pointer relative">
+          {data !== null ? <h1 className="font-semibold text-lg">{data}</h1>:<h1>{data}</h1>}
             <div onClick={() => setShowUser(!showUser)} className="flex">
+            
               <FaUser />
               <FaCaretDown />
             </div>
             {showUser && (
               <motion.ul
                 initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
+                animate={{ y: 5, opacity: 1 }}
                 transition={{ duration: 0.5 }}
                 className="absolute top-6 right-3 z-50 bg-primeColor w-44 text-[#767676] h-auto p-4 pb-6 bg-black"
               >
-                <Link to="/signin">
-                  <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                <Link to={loggedIn?`/`:`/signin`}>
+                  <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer mb-2">
                     Login
                   </li>
                 </Link>
                 <Link onClick={() => setShowUser(false)} to="/signup">
-                  <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                  <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer mb-2">
                     Sign Up
                   </li>
                 </Link>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                  Profile
+                <button onClick={logoutHandler}>
+                <li className="text-gray-400 px-4 py-1  hover:text-white duration-300 cursor-pointer">
+                  Log Out
                 </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                  Others
-                </li>
+                </button>
+                <hr />
+               
               </motion.ul>
             )}
             <Link to="/cart">
               <div className="relative">
                 <FaShoppingCart />
-                <span className="absolute font-titleFont top-3 -right-2 text-xs w-4 h-4 flex items-center justify-center rounded-full bg-primeColor text-white">
+                <span className="absolute font-titleFont top-3 -right-2 text-xs w-4 h-4 flex items-center justify-center rounded-full bg-black text-white">
                   {products.length > 0 ? products.length : 0}
                 </span>
               </div>
@@ -140,6 +210,8 @@ const HeaderBottom = () => {
         </Flex>
       </div>
     </div>
+    </>
+    
   );
 };
 

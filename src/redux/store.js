@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -11,6 +11,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import orebiReducer from "./orebiSlice";
+import authSlice from "./authSlice";
 
 const persistConfig = {
   key: "root",
@@ -18,10 +19,16 @@ const persistConfig = {
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, orebiReducer);
+const orebiPersistedReducer = persistReducer(persistConfig, orebiReducer);
+
+// Combine reducers
+const rootReducer = combineReducers({
+  orebiReducer: orebiPersistedReducer,
+  auth: authSlice,
+});
 
 export const store = configureStore({
-  reducer: { orebiReducer: persistedReducer },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
