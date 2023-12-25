@@ -120,7 +120,6 @@ const SignIn = () => {
 
 
 
-
         {/* 2/3 Part */}
         <div className="w-full lg:w-2/3 h-full bg-white">
           {/* Content for 2/3 part */}
@@ -182,7 +181,6 @@ const SignIn = () => {
       </div>
       <Toaster/>
     </>
-
   );
 };
 
