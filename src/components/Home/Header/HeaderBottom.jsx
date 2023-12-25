@@ -59,6 +59,7 @@ const HeaderBottom = () => {
       dispatch(logout());
       setProgress(100);
       setData("Log In!")
+      setloggedIn(false)
       navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
@@ -165,7 +166,7 @@ const HeaderBottom = () => {
               </div>
             )}
           </div>
-          <div className="flex gap-4 mt-2 lg:mt-0 items-center pr-6 cursor-pointer relative">
+          <div className="flex gap-4 mt-2 lg:mt-0 items-center pr-20 cursor-pointer relative">
           {data !== null ? <h1 className="font-semibold text-lg">{data}</h1>:<h1>{data}</h1>}
             <div onClick={() => setShowUser(!showUser)} className="flex">
             
