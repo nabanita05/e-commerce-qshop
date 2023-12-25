@@ -26,7 +26,7 @@ const HeaderBottom = () => {
         setloggedIn(true)
         toast.success("Logged In Successful!!!")
       } else {
-        setData(null);
+        setData("Log In!");
       }
     } catch (error) {
       console.error("Fetching data failed:", error);
@@ -167,7 +167,7 @@ const HeaderBottom = () => {
             )}
           </div>
           <div className="flex gap-4 mt-2 lg:mt-0 items-center pr-20 cursor-pointer relative">
-          {data !== null ? <h1 className="font-semibold text-lg">{data}</h1>:<h1>{data}</h1>}
+         < h1 className="font-semibold text-lg">{data}</h1>
             <div onClick={() => setShowUser(!showUser)} className="flex">
             
               <FaUser />
@@ -180,8 +180,8 @@ const HeaderBottom = () => {
                 transition={{ duration: 0.5 }}
                 className="absolute top-6 right-3 z-50 bg-primeColor w-44 text-[#767676] h-auto p-4 pb-6 bg-black"
               >
-                <Link to={loggedIn?`/`:`/signin`}>
-                  <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer mb-2">
+                <Link to="/signin">
+                  <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer mb-2" style={loggedIn?{display:`none`}:{display:`block`}}>
                     Login
                   </li>
                 </Link>
