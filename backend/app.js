@@ -8,7 +8,7 @@ export const app = express();
 
 app.use(cors(
     //need to change the uri
-  {origin : ["http://localhost:5173"],
+  {origin : ["https://qshop-frontend.vercel.app"],
   methos : ["POST", "GET"],
   credentials : true,
 }

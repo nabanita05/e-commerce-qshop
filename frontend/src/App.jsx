@@ -18,6 +18,7 @@ import Home from "./pages/Home/Home";
 import Cart from "./pages/Cart/Cart";
 import Wishlist from "./pages/WishList/Wishlist";
 import Payment from "./pages/Payment/Payment";
+import PaymentSuccess from "./pages/Payment/PaymentSuccess";
 
 const Layout = () => {
   return (
@@ -65,6 +66,9 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUp />
+  },{
+    path : "/paymentsuccess",
+    element : <PaymentSuccess/>
   }
 ])
 
