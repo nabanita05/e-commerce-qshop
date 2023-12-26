@@ -1,5 +1,4 @@
 
-import { Link } from "react-router-dom";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import axios from "axios"
 import { useSelector } from "react-redux";
@@ -44,11 +43,11 @@ const Payment = () => {
       <Breadcrumbs title="Payment gateway" />
       <div className="p-10 pt-10 text-center ">
         <p>Pay With Razorpay! We&apos;re continuously working to add more payment gateways</p>
-        <Link to="/">
+       
           <button onClick={paymentHandler} className="w-52 h-10 bg-primeColor text-white text-lg mt-4 hover:bg-black duration-300">
             Proceed To Pay 
           </button>
-        </Link>
+       
       </div>
     </div>
   );
