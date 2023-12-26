@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 const Payment = () => {
     
     const amountToPay = useSelector((state)=> state.amountpay.payableAmount)
+    console.log(amountToPay);
 
     const paymentHandler  = async ()=>{
         const { data: { key } } = await axios.get("https://e-commerce-qshop.vercel.app/api/getkey")
