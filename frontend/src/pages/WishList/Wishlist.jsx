@@ -4,6 +4,8 @@ import ItemWishList from "./ItemWishList";
 import { motion } from "framer-motion";
 import { emptyCart } from "../../assets/images/index";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { addToCart } from "../../redux/orebiSlice";
 
 
 function Wishlist() {
@@ -12,7 +14,21 @@ function Wishlist() {
     const WishlistProducts = useSelector((state) => state.wishlist.wishlist);
 
     const wishlistToCart=()=>{
-        
+        if(isAuthenticated){
+            WishlistProducts.map((ele)=> dispatch(addToCart({
+                _id : ele._id,
+                name: ele.name,
+                quantity: 1,
+                image: ele.image,
+                badge: ele.badge,
+                price: ele.price,
+                colors: ele.colors,
+                maxQunatity : 5,
+            })))
+            toast.success("All Items Added To Cart!!!")
+        }else{
+            toast.error("Log In First!")
+        }
     }
 
     return (
@@ -22,7 +38,7 @@ function Wishlist() {
                 <div className="pb-20">
                     <div className=" hidden lg:grid grid-cols-3 w-full h-20 place-content-center px-6 text-lg font-titleFont font-bold" style={{ backgroundColor: "#F5F7F7", color: "#00000" }}>
                         <h2 className="col-span-2">Product</h2>
-                        <h2>Product Page</h2>
+                        <h2>Add To Cart</h2>
                     </div>
                     <div className="mt-5">
                         {WishlistProducts.map((item) => (
@@ -37,7 +53,7 @@ function Wishlist() {
 
                             <div className="flex justify-end">
 
-                                <button onClick={wishlistToCart} className="w-52 h-20 bg-primeColor text-white hover:bg-black duration-300">
+                                <button onClick={wishlistToCart} className="w-52 h-20 bg-primeColor text-white hover:bg-black duration-300 rounded-lg">
                                     Add All Items To Cart
                                 </button>
 
