@@ -8,7 +8,7 @@ export const app = express();
 
 app.use(cors(
     //need to change the uri
-  {origin : ["https://qshop-frontend.vercel.app"],
+  {origin : ["https://qshop-frontend.vercel.app/paymentgateway"],
   methos : ["POST", "GET"],
   credentials : true,
 }
