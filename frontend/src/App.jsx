@@ -16,6 +16,7 @@ import SpecialCase from "./components/SpecialCase/SpecialCase";
 import Shop from "./pages/shop/Shop";
 import Home from "./pages/Home/Home";
 import Cart from "./pages/Cart/Cart";
+import Wishlist from "./pages/WishList/Wishlist";
 
 const Layout = () => {
   return (
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />
+      },
+      {
+        path: "/wishlist",
+        element: <Wishlist/>
       }
     ]
   },

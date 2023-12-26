@@ -9,6 +9,7 @@ import Badge from "./Badge";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/orebiSlice";
+import { addToWishlist } from "../../../redux/wishList";
 import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 
@@ -53,6 +54,24 @@ const Product = (props) => {
     }
   }
 
+  const handleAddToWishlist = ()=>{
+    if(isAuthenticated){
+      dispatch(
+        addToWishlist({
+          _id: props._id,
+          name: props.productName,
+          image: props.img,
+          badge: props.badge,
+          price: props.price,
+          colors: props.color
+        })
+      )
+      toast.success("Added to wishlist!")
+    }else{
+      toast.error("Log In First!")
+    }
+  }
+
   
   return (
     <>
@@ -92,7 +111,9 @@ const Product = (props) => {
                 <MdOutlineLabelImportant />
               </span>
             </li>
-            <li className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full">
+            <li 
+            onClick={handleAddToWishlist}
+            className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full">
               Add to Wish List
               <span>
                 <BsSuitHeartFill />

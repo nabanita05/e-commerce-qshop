@@ -10,6 +10,7 @@ import toast, { Toaster } from "react-hot-toast";
 import LoadingBar from 'react-top-loading-bar';
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/authSlice";
+import { BsSuitHeartFill } from "react-icons/bs";
 
 const HeaderBottom = () => {
   //User Logged In or Not
@@ -69,6 +70,7 @@ const HeaderBottom = () => {
 
 
   const products = useSelector((state) => state.orebiReducer.products);
+  const wishlistProducts = useSelector((state)=>state.wishlist.wishlist);
   const [show, setShow] = useState(false);
   const [showUser, setShowUser] = useState(false);
   const navigate = useNavigate();
@@ -178,7 +180,7 @@ const HeaderBottom = () => {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 5, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="absolute top-6 right-3 z-50 bg-primeColor w-44 text-[#767676] h-auto p-4 pb-6 bg-black"
+                className="absolute top-6 right-3 z-50 w-44 text-[#767676] h-auto p-4 pb-6 bg-black"
               >
                 <Link to="/signin">
                   <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer mb-2" style={loggedIn?{display:`none`}:{display:`block`}}>
@@ -206,6 +208,14 @@ const HeaderBottom = () => {
                 <FaShoppingCart />
                 <span className="absolute font-titleFont top-3 -right-2 text-xs w-4 h-4 flex items-center justify-center rounded-full bg-black text-white">
                   {(products.length > 0 && loggedIn) ? products.length : 0}
+                </span>
+              </div>
+            </Link>
+            <Link to="/wishlist">
+              <div className="relative">
+                <BsSuitHeartFill /> 
+                <span className="absolute font-titleFont top-3 -right-2 text-xs w-4 h-4 flex items-center justify-center rounded-full bg-black text-white">
+                  {(wishlistProducts.length > 0 && loggedIn) ? wishlistProducts.length : 0}
                 </span>
               </div>
             </Link>

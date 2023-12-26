@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -11,7 +11,7 @@ import ItemCard from "./ItemCard.jsx";
 const Cart = () => {
 
   const isAuthenticated = useSelector((state) => state.auth.status);
- 
+
   const dispatch = useDispatch();
   const products = useSelector((state) => state.orebiReducer.products);
   const [totalAmt, setTotalAmt] = useState("");
@@ -35,10 +35,10 @@ const Cart = () => {
   }, [totalAmt]);
   return (
     <div className="max-w-container mx-auto px-7">
-      <Breadcrumbs title="Cart" />
-      {(products.length > 0 && isAuthenticated)?(
+      <Breadcrumbs title="Cart 🛒" />
+      {(products.length > 0 && isAuthenticated) ? (
         <div className="pb-20">
-          <div className=" hidden lg:grid grid-cols-5 w-full h-20 place-content-center px-6 text-lg font-titleFont font-bold" style={{backgroundColor: "#F5F7F7", color : "#00000"}}>
+          <div className=" hidden lg:grid grid-cols-5 w-full h-20 place-content-center px-6 text-lg font-titleFont font-bold" style={{ backgroundColor: "#F5F7F7", color: "#00000" }}>
             <h2 className="col-span-2">Product</h2>
             <h2>Price</h2>
             <h2>Quantity</h2>
@@ -105,7 +105,7 @@ const Cart = () => {
             </div>
           </div>
         </div>
-      ): (
+      ) : (
         <motion.div
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -124,30 +124,30 @@ const Cart = () => {
               Your Cart feels lonely.
             </h1>
             <p className="text-sm text-center px-10 -mt-2">
-              We think you are logged in yet!!! What&apos;re you waiting for!!?
+              We think you&apos;re not logged in yet!!! What&apos;re you waiting for!!?
             </p>
             <Link to="/signin">
               <button className="bg-primeColor rounded-md cursor-pointer hover:bg-black active:bg-gray-900 px-8 py-2 font-titleFont font-semibold text-lg text-gray-200 hover:text-white duration-300">
                 Log In
               </button>
             </Link>
-          </div>  :
-          <div className="max-w-[500px] p-4 py-8 bg-white flex gap-4 flex-col items-center rounded-md shadow-lg">
-          <h1 className="font-titleFont text-xl font-bold uppercase">
-            Your Cart feels lonely.
-          </h1>
-          <p className="text-sm text-center px-10 -mt-2">
-            Your Shopping cart lives to serve. Give it purpose - fill it with
-            books, electronics, videos, etc. and make it happy.
-          </p>
-          <Link to="/shop">
-            <button className="bg-primeColor rounded-md cursor-pointer hover:bg-black active:bg-gray-900 px-8 py-2 font-titleFont font-semibold text-lg text-gray-200 hover:text-white duration-300">
-              Continue Shopping
-            </button>
-          </Link>
-        </div>}
-          
-          
+          </div> :
+            <div className="max-w-[500px] p-4 py-8 bg-white flex gap-4 flex-col items-center rounded-md shadow-lg">
+              <h1 className="font-titleFont text-xl font-bold uppercase">
+                Your Cart feels lonely.
+              </h1>
+              <p className="text-sm text-center px-10 -mt-2">
+                Your Shopping cart lives to serve. Give it purpose - fill it with
+                books, electronics, videos, etc. and make it happy.
+              </p>
+              <Link to="/shop">
+                <button className="bg-primeColor rounded-md cursor-pointer hover:bg-black active:bg-gray-900 px-8 py-2 font-titleFont font-semibold text-lg text-gray-200 hover:text-white duration-300">
+                  Continue Shopping
+                </button>
+              </Link>
+            </div>}
+
+
         </motion.div>
       )}
     </div>
