@@ -5,25 +5,28 @@ import { useSelector } from "react-redux";
 
 const Payment = () => {
     
-    const amountToPay = useSelector((state)=> state.amountpay.payableAmount)
-    console.log(amountToPay);
+    const amount = useSelector((state)=> state.amountpay.payableAmount)
+    console.log(amount);
+    
 
     const paymentHandler  = async ()=>{
-        const { data: { key } } = await axios.get("https://e-commerce-qshop.vercel.app/api/getkey")
+        const { data: { key } } = await axios.get("http://localhost:4000/api/getkey")
 
-        const { data: { order } } = await axios.post("https://e-commerce-qshop.vercel.app/api/checkout", {
-            amountToPay
+        console.log(key);
+
+        const { data: { order } } = await axios.post("http://localhost:4000/api/checkout", {
+            amount
         })
 
         const options = {
             key, 
-            amount : order.amountToPay,
+            amount : order.amount,
             currency : "INR",
             name : "QSHop",
             description : "You're Completely Secured while Paying",
             image: "https://images.pexels.com/photos/2988232/pexels-photo-2988232.jpeg",
             order_id : order.id,
-            callback_url : "https://e-commerce-qshop.vercel.app/api/paymentverification",
+            callback_url : "http://localhost:4000/api/paymentverification",
             prefill : {
                 name : "Nabanita Sarma",
                 email : "sarmaatinaban241i@gmail.com",
@@ -34,7 +37,7 @@ const Payment = () => {
             },
             theme : {
                 "color" : "#92E9F0"
-            }
+            },
         };
         const razor = new window.Razorpay(options)
         razor.open()
