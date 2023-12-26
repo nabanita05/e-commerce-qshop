@@ -38,7 +38,7 @@ export const paymentVerification = async (req, res) => {
     });
     //need to change
     res.redirect(
-      `https://payment-server-alpha.vercel.app/paymentsuccess?reference=${razorpay_payment_id}`
+      `https://qshop-frontend.vercel.app/paymentsuccess?reference=${razorpay_payment_id}`
     );
   } else {
     res.status(400).json({
