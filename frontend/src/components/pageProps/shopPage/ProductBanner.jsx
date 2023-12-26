@@ -3,6 +3,7 @@ import { BsGridFill } from "react-icons/bs";
 import { ImList } from "react-icons/im";
 import { GoTriangleDown } from "react-icons/go";
 
+// eslint-disable-next-line react/prop-types
 const ProductBanner = ({ itemsPerPageFromBanner }) => {
   //   const [selected, setSelected] = useState("");
   const [girdViewActive, setGridViewActive] = useState(true);

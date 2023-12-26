@@ -190,12 +190,14 @@ const HeaderBottom = () => {
                     Sign Up
                   </li>
                 </Link>
-                <button onClick={logoutHandler}>
-                <li className="text-gray-400 px-4 py-1  hover:text-white duration-300 cursor-pointer">
-                  Log Out
+                <div onClick={logoutHandler} className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer mb-2" style={loggedIn?{display:`block`}:{display:`none`}}>
+                <li className="text-gray-400  hover:text-white duration-300 cursor-pointer" >
+                  Log Out               
                 </li>
-                </button>
-                <hr />
+                
+                 </div>
+                 {/* <hr  style={loggedIn?{display:`block`}:{display:`none`}}/> */}
+              
                
               </motion.ul>
             )}
@@ -203,7 +205,7 @@ const HeaderBottom = () => {
               <div className="relative">
                 <FaShoppingCart />
                 <span className="absolute font-titleFont top-3 -right-2 text-xs w-4 h-4 flex items-center justify-center rounded-full bg-black text-white">
-                  {products.length > 0 ? products.length : 0}
+                  {(products.length > 0 && loggedIn) ? products.length : 0}
                 </span>
               </div>
             </Link>
