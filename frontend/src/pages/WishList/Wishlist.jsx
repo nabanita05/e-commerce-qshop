@@ -6,6 +6,7 @@ import { emptyCart } from "../../assets/images/index";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { addToCart } from "../../redux/orebiSlice";
+import { resetWishlist } from "../../redux/wishList";
 
 
 function Wishlist() {
@@ -26,6 +27,7 @@ function Wishlist() {
                 maxQunatity : 5,
             })))
             toast.success("All Items Added To Cart!!!")
+            dispatch(resetWishlist())
         }else{
             toast.error("Log In First!")
         }

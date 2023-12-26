@@ -6,10 +6,13 @@ import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import { resetCart } from "../../redux/orebiSlice";
 import { emptyCart } from "../../assets/images/index";
 import ItemCard from "./ItemCard.jsx";
+import { setAmount } from "../../redux/amountSlice.js";
+import { useNavigate } from "react-router-dom";
 
 
 const Cart = () => {
 
+  const navigate = useNavigate()
   const isAuthenticated = useSelector((state) => state.auth.status);
 
   const dispatch = useDispatch();
@@ -33,6 +36,12 @@ const Cart = () => {
       setShippingCharge(20);
     }
   }, [totalAmt]);
+
+  const paymentHandler = ()=>{
+    dispatch(setAmount(totalAmt + shippingCharge))
+    navigate("/paymentgateway")
+  }
+
   return (
     <div className="max-w-container mx-auto px-7">
       <Breadcrumbs title="Cart 🛒" />
@@ -96,11 +105,11 @@ const Cart = () => {
                 </p>
               </div>
               <div className="flex justify-end">
-                <Link to="/paymentgateway">
-                  <button className="w-52 h-10 bg-primeColor text-white hover:bg-black duration-300">
+                
+                  <button onClick={paymentHandler} className="w-52 h-10 bg-primeColor text-white hover:bg-black duration-300">
                     Proceed to Checkout
                   </button>
-                </Link>
+               
               </div>
             </div>
           </div>

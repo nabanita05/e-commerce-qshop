@@ -13,6 +13,7 @@ import storage from "redux-persist/lib/storage";
 import orebiReducer from "./orebiSlice";
 import authSlice from "./authSlice";
 import wishList from "./wishList";
+import amountSlice from "./amountSlice";
 
 const persistConfig = {
   key: "root",
@@ -26,7 +27,8 @@ const orebiPersistedReducer = persistReducer(persistConfig, orebiReducer);
 const rootReducer = combineReducers({
   orebiReducer: orebiPersistedReducer,
   auth: authSlice,
-  wishlist : wishList
+  wishlist : wishList,
+  amountpay : amountSlice
 });
 
 export const store = configureStore({

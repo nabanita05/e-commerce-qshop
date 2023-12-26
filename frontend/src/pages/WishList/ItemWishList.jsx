@@ -19,6 +19,7 @@ const ItemWishList = ({ item }) => {
             colors: item.colors,
             maxQunatity: 5,
         }))
+        dispatch(deleteWishlist(item._id))
         toast.success("Added to Cart!")
     }
 
