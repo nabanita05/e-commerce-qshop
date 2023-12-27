@@ -15,6 +15,27 @@ export const checkout = async (req, res) => {
   });
 };
 
+export const getPaymentDetails= async (req, res) => {
+  try {
+    const  razorpay_payment_id  = req.body.razorpay_payment_id;
+    console.log(req.body.razorpay_payment_id);
+    const payment = await Payment.findOne({razorpay_payment_id : razorpay_payment_id} );
+    if (!payment) {
+      console.log("Paini re bhai!");
+      return res.status(404).json({ error: "Payment not found" });
+    }
+
+    res.json({
+      razorpay_order_id: payment.razorpay_order_id,
+      razorpay_signature: payment.razorpay_signature,
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
 export const paymentVerification = async (req, res) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
     req.body;
