@@ -2,7 +2,7 @@
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import axios from "axios"
 import { useSelector } from "react-redux";
-import logo from "../../../public/logo.png"
+import logo from "/logo.png"
 
 const Payment = () => {
 
