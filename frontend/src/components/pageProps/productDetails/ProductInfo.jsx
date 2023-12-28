@@ -63,13 +63,13 @@ const ProductInfo = ({ productInfo }) => {
           onClick={addToCartHandler}
           className="w-full py-4 bg-primeColor hover:bg-black duration-300 text-white text-lg font-titleFont"
         >
-          Add to Cart
+          Add to Cart 🛒
         </button>
         <button
           onClick={addToWishListHandler}
           className="w-full py-4 bg-primeColor hover:bg-black duration-300 text-white text-lg font-titleFont"
         >
-          Add to Wishlist
+          Add to Wishlist ❤️
         </button>
         <p className="font-normal text-sm">
           <span className="text-base font-medium"> Categories:</span> Spring
