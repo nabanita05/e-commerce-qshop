@@ -9,27 +9,30 @@ import ItemCard from "./ItemCard.jsx";
 import { setAmount } from "../../redux/amountSlice.js";
 import { useNavigate } from "react-router-dom";
 import authService from "../../appwrite/auth.js";
+import axios from "axios";
 
 
 const Cart = () => {
 
-  const [userName, setuserName] = useState("Unknown!")
-  //get user name:
-  const fetchData = async ()=>{
-    try {
-      const userData = await authService.getCurrentUser();
-      if(userData){
-        setuserName(userData.name)
-      console.log(userName);
-      }
-    } catch (error) {
-      console.error("Fetching data failed:", error);
-    }
-  }
+  const [userName, setUserName] = useState("Unknown!");
 
-  useEffect(() => {
-    fetchData()
-  }, [])
+// get user name:
+const fetchData = async () => {
+  try {
+    const userData = await authService.getCurrentUser();
+    console.log(userData);
+    if (userData) {
+      setUserName(userData.name);
+    }
+  } catch (error) {
+    console.error("Fetching data failed:", error);
+  }
+};
+
+useEffect(() => {
+  fetchData();
+}, []);
+
   
 
   const navigate = useNavigate()
@@ -57,19 +60,22 @@ const Cart = () => {
     }
   }, [totalAmt]);
 
-  const paymentHandler = ()=>{
+  const paymentHandler = async ()=>{
+    if(userName !== "Unknown!"){
+      try {
+        await axios.post("http://localhost:4000/api/saveOrder",{
+          name : userName,
+          price : totalAmt,
+          shippingFee : shippingCharge
+        })
+      } catch (error) {
+        console.error("Error saving order details: ", error);
+      }
+    }
     dispatch(setAmount(totalAmt + shippingCharge))
     navigate("/paymentgateway")
   }
 
-
-  const handleSaveOrderDetails = async ()=>{
-    try {
-      await axios.post()
-    } catch (error) {
-      console.log("Error saving order", error);
-    }
-  }
 
   return (
     <div className="max-w-container mx-auto px-7">
