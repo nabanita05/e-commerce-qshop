@@ -8,9 +8,29 @@ import { emptyCart } from "../../assets/images/index";
 import ItemCard from "./ItemCard.jsx";
 import { setAmount } from "../../redux/amountSlice.js";
 import { useNavigate } from "react-router-dom";
+import authService from "../../appwrite/auth.js";
 
 
 const Cart = () => {
+
+  const [userName, setuserName] = useState("Unknown!")
+  //get user name:
+  const fetchData = async ()=>{
+    try {
+      const userData = await authService.getCurrentUser();
+      if(userData){
+        setuserName(userData.name)
+      console.log(userName);
+      }
+    } catch (error) {
+      console.error("Fetching data failed:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+  
 
   const navigate = useNavigate()
   const isAuthenticated = useSelector((state) => state.auth.status);
@@ -40,6 +60,15 @@ const Cart = () => {
   const paymentHandler = ()=>{
     dispatch(setAmount(totalAmt + shippingCharge))
     navigate("/paymentgateway")
+  }
+
+
+  const handleSaveOrderDetails = async ()=>{
+    try {
+      await axios.post()
+    } catch (error) {
+      console.log("Error saving order", error);
+    }
   }
 
   return (
