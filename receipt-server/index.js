@@ -33,4 +33,8 @@ app.get('/fetch-pdf', (req, res) => {
     res.sendFile(`${__dirname}/result.pdf`)
 })
 
+app.get('/',(req,res)=>{
+    res.json("Hello")
+})
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
