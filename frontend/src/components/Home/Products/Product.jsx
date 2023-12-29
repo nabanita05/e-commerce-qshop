@@ -49,6 +49,7 @@ const Product = (props) => {
           maxQunatity : 5,
         })
       )
+      toast.success("Added to cart!")
     }else{
       toast.error("Log In First!")
     }
