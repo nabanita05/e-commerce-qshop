@@ -5,6 +5,7 @@ import FooterListTitle from "./FooterListTitle";
 import { paymentCard } from "../../../assets/images";
 import Image from "../../designLayouts/Image";
 import emailjs from '@emailjs/browser'
+import conf from "../../../conf/conf";
 
 const Footer = () => {
   const [emailInfo, setEmailInfo] = useState("");
