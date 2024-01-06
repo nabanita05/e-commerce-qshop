@@ -1,7 +1,6 @@
 module.exports = ({ name, razorpay_order_id, razorpay_signature, razorpay_payment_id, price, shippingFee}) => {
    const today = new Date();
    const totalPrice = parseInt(price) + parseInt(shippingFee);
-   const logo = require("./logo.png")
 
    return `
        <!doctype html>
@@ -114,7 +113,7 @@ module.exports = ({ name, razorpay_order_id, razorpay_signature, razorpay_paymen
                                <table>
                                    <tr>
                                        <td class="title">
-                                           <img src="./logo.png" alt="Logo">
+                                           <img src="https://images.pexels.com/photos/50987/money-card-business-credit-card-50987.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Logo">
                                        </td>
                                        <td>
                                            Date: ${`${today.getDate()}. ${today.getMonth() + 1}. ${today.getFullYear()}.`}

@@ -7,6 +7,7 @@ import authService from '../../appwrite/auth'
 import { login } from '../../redux/authSlice'
 import { Link } from 'react-router-dom';
 import { BsCheckCircleFill } from 'react-icons/bs';
+import { FaGoogle } from "react-icons/fa";
 
 function SignUp() {
     const [error, setError] = useState("")
@@ -32,6 +33,16 @@ function SignUp() {
             setError(error.message)
         }
     }
+
+    const loginWithGoogle = () => {
+        try {
+            authService.loginWithGoogle();
+            // After the user is redirected back from Google, handle the callback
+            // and complete the authentication process
+        } catch (error) {
+            setError(error.message);
+        }
+    }
     return (
         <>
             <LoadingBar
@@ -47,19 +58,18 @@ function SignUp() {
                         <Link to="/">
                             <h1 className="text-4xl font-extrabold text-blue-300 mb-5">QShop</h1>
                         </Link>
-                        <h1 className="text-white font-semibold text-xl m-3">Stay Sign In For More</h1>
-                        <p className="text-white m-3">When You Sign In, You&apos;re with us</p>
+                        <h1 className="text-white font-semibold text-xl m-3">Stay Signed In For More</h1>
+                        <p className="text-white m-3">Unlock a world of possibilities when you sign in to QShop.</p>
                         <div className="w-[300px] flex items-start gap-3 m-4 mt-7">
                             <span className="text-green-500 mt-1">
                                 <BsCheckCircleFill />
                             </span>
                             <p className="text-base text-gray-300">
                                 <span className="text-white font-semibold font-titleFont">
-                                    Get started fast with QShop
+                                    Fast and Seamless Shopping Experience
                                 </span>
                                 <br />
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab omnis nisi dolor
-                                recusandae consectetur!
+                                Discover the joy of quick and hassle-free shopping at QShop.
                             </p>
                         </div>
                         <div className="w-[300px] flex items-start gap-3 m-4">
@@ -68,11 +78,10 @@ function SignUp() {
                             </span>
                             <p className="text-base text-gray-300">
                                 <span className="text-white font-semibold font-titleFont">
-                                    Access all QShop services
+                                    Access a Comprehensive Range of QShop Services
                                 </span>
                                 <br />
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab omnis nisi dolor
-                                recusandae consectetur!
+                                Enjoy access to a wide array of services tailored just for you.
                             </p>
                         </div>
                         <div className="w-[300px] flex items-start gap-3 m-4 mb-10">
@@ -81,17 +90,16 @@ function SignUp() {
                             </span>
                             <p className="text-base text-gray-300">
                                 <span className="text-white font-semibold font-titleFont">
-                                    Trusted by online Shoppers
+                                    Trusted by Discerning Online Shoppers
                                 </span>
                                 <br />
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab omnis nisi dolor
-                                recusandae consectetur!
+                                Join millions of satisfied customers who trust QShop for their online shopping needs.
                             </p>
                         </div>
-                        <div className="flex items-center justify-center mt-20 ">
+                        <div className="flex items-center justify-center mt-20">
                             <Link to="/">
                                 <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300 p-5">
-                                    ©QShop
+                                    © QShop
                                 </p>
                             </Link>
                             <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300 p-5">
@@ -109,13 +117,23 @@ function SignUp() {
 
 
 
+
                 {/* 2/3 Part */}
                 <div className="w-full lg:w-2/3 h-full bg-white">
                     {/* Content for 2/3 part */}
                     <div className="flex items-center justify-center h-full">
                         <div className="w-full max-w-md bg-white p-8 rounded shadow-md">
-                            <h1 className="text-3xl font-bold mb-8">Sign Up</h1>
+                            <h1 className="text-5xl font-bold mb-8 text-center">Sign Up</h1>
                             {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
+                            <div className="mb-6">
+                                <button
+                                    onClick={loginWithGoogle}
+                                    className="w-full bg-red-500 text-white p-3 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-300 flex items-center justify-center"
+                                >
+                                    <FaGoogle className="mr-2" />
+                                    Sign Up With Google
+                                </button>
+                            </div>
                             <form onSubmit={handleSubmit(create)}>
                                 <div className="mb-4">
                                     <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">

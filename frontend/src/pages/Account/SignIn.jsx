@@ -9,6 +9,7 @@ import authService from '../../appwrite/auth'
 import { login as authLogin } from '../../redux/authSlice'
 import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
+import { FaGoogle } from "react-icons/fa";
 
 
 
@@ -39,6 +40,16 @@ const SignIn = () => {
     } catch (error) {
       toast.error("Invalid Details")
       setProgress(100)
+      setError(error.message);
+    }
+  }
+
+  const loginWithGoogle = () => {
+    try {
+      authService.loginWithGoogle();
+      // After the user is redirected back from Google, handle the callback
+      // and complete the authentication process
+    } catch (error) {
       setError(error.message);
     }
   }
@@ -125,8 +136,17 @@ const SignIn = () => {
           {/* Content for 2/3 part */}
           <div className="flex items-center justify-center h-full">
             <div className="w-full max-w-md bg-white p-8 rounded shadow-md">
-              <h1 className="text-3xl font-bold mb-8">Log In</h1>
+              <h1 className="text-5xl font-bold mb-8 text-center">Log In</h1>
               {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
+              <div className="mb-6">
+                <button
+                  onClick={loginWithGoogle}
+                  className="w-full bg-red-500 text-white p-3 rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-300 flex items-center justify-center"
+                >
+                  <FaGoogle className="mr-2" />
+                  Log In with Google
+                </button>
+              </div>
               <form onSubmit={handleSubmit(login)}>
                 <div className="mb-4">
                   <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
@@ -179,7 +199,7 @@ const SignIn = () => {
           </div>
         </div>
       </div>
-      <Toaster/>
+      <Toaster />
     </>
   );
 };

@@ -43,9 +43,8 @@ const Payment = () => {
     setProgress(100)
     const razor = new window.Razorpay(options)
     razor.open()
-
-
   }
+  
   return (
     <>
     <LoadingBar
