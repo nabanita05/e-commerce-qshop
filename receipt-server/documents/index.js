@@ -155,15 +155,15 @@ module.exports = ({ name, razorpay_order_id, razorpay_signature, razorpay_paymen
                        </tr>
                        <tr class="item">
                            <td>Price:</td>
-                           <td>${price}$</td>
+                           <td>${price}₹</td>
                        </tr>
                        <tr class="item">
                            <td>Shipping Fee:</td>
-                           <td>${shippingFee}$</td>
+                           <td>${shippingFee}₹</td>
                        </tr>
                    </table>
                    <br />
-                   <h1>Total Price: ${totalPrice}$</h1>
+                   <h1>Total Price: ${totalPrice}₹</h1>
                </div>
            </body>
        </html>
