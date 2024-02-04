@@ -29,8 +29,10 @@ import productOfTheYear from "./products/productOfTheYear.webp";
 // ============== Products End here ======================
 import paymentCard from "./payment.png";
 import emptyCart from "../images/emptyCart.png";
+import Bottle from "./bottle.png"
 
 export {
+  Bottle,
   logo,
   bannerImgOne,
   bannerImgTwo,

@@ -11,6 +11,7 @@ import {
     newArrTwo,
     newArrThree,
     newArrFour,
+    Bottle,
   } from "../assets/images/index";
   
   // =================== NavBarList Start here ====================
@@ -500,6 +501,15 @@ import {
       color: "Blank and White",
       badge: true,
       des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    },
+    {
+      _id: 1089,
+      img: Bottle,
+      productName: "Bottles",
+      price: "100.00",
+      color: "Green",
+      badge: false,
+      des: "Very Premium Product",
     },
   ];
   // =================== PaginationItems End here =================
