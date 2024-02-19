@@ -9,22 +9,31 @@ import dashboardIcon from "../assets/home.png"
 import "./custom.css";
 import StorageImg from "../assets/storage.png"
 
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
+
 
 const Sidebar = () => {
+
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    console.log(location.pathname);
 
 
     return (
         <div className="sidebar_content">
-            <div className="sodebarLogo">
-                <h1>QShop Admin</h1>
+            <div className="sodebarLogo text-center">
+                <h3 style={{color : "#000"}}>QShop Admin</h3>
             </div>
             <div className="sidebarMenu">
                 <Nav>
                     <Nav.Item>
                         <Nav.Link
-                            href="#"
-                            active={true}
-                            onClick={()=>{}}
+                           
+                            active={location.pathname.includes("dashboard") ? true : false}
+                            onClick={()=>{ navigate("/dashboard")}}
                         >
                             <img
                                 src={dashboardIcon}
@@ -37,9 +46,8 @@ const Sidebar = () => {
                     </Nav.Item>
                     <Nav.Item>
                         <Nav.Link
-                            href="#"
-                            active={true}
-                            onClick={()=>{}}
+                            active={location.pathname.includes("products") ? true : false}
+                            onClick={()=>{navigate("/products")}}
                         >
                             <img
                                 src={StorageImg}
