@@ -5,7 +5,6 @@ import Product from "../../Home/Products/Product.jsx";
 import { paginationItems } from "../../../constants";
 
 const items = paginationItems;
-// eslint-disable-next-line react/prop-types
 function Items({ currentItems }) {
   return (
     <>

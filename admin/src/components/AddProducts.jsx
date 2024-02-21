@@ -7,6 +7,9 @@ import * as yup from "yup";
 import UploadIcon from "../assets/upload-icon.png";
 import UploadImg from "../assets/UploadImg.png";
 import CrossIcon from "../assets/cross.png";
+import appwriteService from "../appwrite/config";
+import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast"
 import "./custom.css"
 
 
@@ -60,15 +63,37 @@ const AddLocationSchema = yup.object().shape({
   price: yup.string().required("Price is required field"),
   color: yup.string().required("Color is required field"),
   badge: yup.boolean().required(),
-  image : imageValidation
+  image: imageValidation
 });
+
+function createSlug(str) {
+  // Convert the string to lowercase and replace spaces with hyphens
+  return str.toLowerCase().replace(/\s+/g, '-');
+}
 const AddProduct = () => {
-  const handleAddProduct = (e) => {
-    console.log(e);
+
+  const navigate = useNavigate()
+  const handleAddProduct = async (data) => {
+    const slug = createSlug(data.productName)
+    data.slug = slug
+    const file = await appwriteService.uploadFile(data.image);
+
+    if (file) {
+      const fileId = file.$id;
+      data.featuredImage = fileId;
+      console.log(data);
+      const dbPost = await appwriteService.createPost({ ...data });
+
+      if (dbPost) {
+        toast.success("Product Added")
+        navigate("/dashboard");
+      }
+    }
   }
 
   return (
     <>
+      <Toaster />
       <Formik
         initialValues={initialValues}
         validationSchema={AddLocationSchema}
@@ -183,14 +208,14 @@ const AddProduct = () => {
                           <img
                             src={UploadIcon}
                             alt="..."
-                            style={{height: "10px", width : "10px"}}
+                            style={{ height: "10px", width: "10px" }}
                           />
                         </div>
                         Upload
                       </Form.Label>
                       <Form.Control
                         className="photo-input"
-                        style={{display: "none"}}
+                        style={{ display: "none" }}
                         id="image"
                         type="file"
                         placeholder=""

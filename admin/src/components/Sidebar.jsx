@@ -32,7 +32,7 @@ const Sidebar = () => {
                     <Nav.Item>
                         <Nav.Link
                            
-                            active={location.pathname.includes("dashboard") ? true : false}
+                            active={(location.pathname.includes("dashboard") || location.pathname == "/") ? true : false}
                             onClick={()=>{ navigate("/dashboard")}}
                         >
                             <img

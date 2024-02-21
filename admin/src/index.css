@@ -503,7 +503,7 @@ span.notiNumber {
 }
 
 .inactiveBtn {
-  background-color: #F7594F !important;
+  background-color: #1bc9d2 !important;
   border: 0 !important;
   width: 130px;
   height: 30px;
@@ -775,7 +775,7 @@ span.notiNumber {
 }
 
 .btn-cust:hover {
-  background-color: #e2462e !important;
+  background-color: #9631ef !important;
 }
 
 .btn-cust1:hover {
@@ -1274,6 +1274,9 @@ a#sub-dropdown-employee {
   background-color: var(--bs-secondary-bg) !important;
   opacity: 1;
 }
+.image-style{
+  width: 30%;
+}
 
 
 @media (min-width: 992px) {
@@ -1300,6 +1303,6 @@ a#sub-dropdown-employee {
   }
 
   .UsrlistingTable table {
-    width: 1200px;
+    width: 80vw;
   }
 }
