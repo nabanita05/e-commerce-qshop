@@ -66,7 +66,7 @@ export class Service{
             return true
         } catch (error) {
             console.log("Appwrite serive :: deletePost :: error", error);
-            return false
+            throw error
         }
     }
 

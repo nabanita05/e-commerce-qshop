@@ -4,8 +4,8 @@ import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import appwriteService from "../appwrite/config"
 import { useEffect, useState } from "react";
-
-
+import DelPng from "../assets/del.png"
+import toast, {Toaster} from "react-hot-toast"
 const Dashboard = () => {
   const [data, setdata] = useState([])
   useEffect(() => {
@@ -17,12 +17,21 @@ const Dashboard = () => {
     })
   }, [])
 
+  const deletePost = (item) => {
+    appwriteService.deletePost(item.$id).then((status) => {
+        if (status) {
+            appwriteService.deleteFile(item.featuredImage);
+           toast.success("Deleted")
+        }
+    });
+};
+
 
 
   return (
 
     <>
-
+  <Toaster/>
       <div className="bodyArea">
         <Container fluid className="">
           <Row>
@@ -77,6 +86,9 @@ const Dashboard = () => {
                             <th>
                               <span>Featured Image</span>
                             </th>
+                            <th>
+                              <span>Actions</span>
+                            </th>
                           </tr>
                         </thead>
 
@@ -107,6 +119,8 @@ const Dashboard = () => {
                                   </div>
                                 </td>
                                 <td><img src={appwriteService.getFilePreview(item.featuredImage)} alt={"image"} className="image-style"
+                                /></td>
+                                <td><img src={DelPng} alt="Delete" title="Delete" className="image-style" style={{cursor : "pointer"}} onClick={()=>deletePost(item)}
                                 /></td>
 
                               </tr>

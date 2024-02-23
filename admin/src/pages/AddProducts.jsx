@@ -4,9 +4,11 @@ import Col from "react-bootstrap/Col";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar"
 import AddProduct from "../components/AddProducts";
+import { Toaster } from "react-hot-toast";
 
 const AddProducts = () => {
-  return (
+  return (<>
+    <Toaster />
     <div className="bodyArea">
       <Container fluid className="">
         <Row>
@@ -22,6 +24,8 @@ const AddProducts = () => {
         </Row>
       </Container>
     </div>
+  </>
+
   );
 };
 export default AddProducts;
