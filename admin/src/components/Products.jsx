@@ -5,99 +5,108 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import * as yup from "yup";
 import UploadIcon from "../assets/upload-icon.png";
-import UploadImg from "../assets/UploadImg.png";
 import CrossIcon from "../assets/cross.png";
 import appwriteService from "../appwrite/config";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast"
 import "./custom.css"
+import PropTypes from 'prop-types';
+import Cookies from "js-cookie"
+import UploadImage from "../assets/UploadImg.png"
+import LoadingBar from 'react-top-loading-bar'
+import { useState } from "react";
 
 
-const initialValues = {
-  productName: "",
-  des: "",
-  price: "",
-  color: "",
-  badge: false,
-  image: ""
-};
-const isValidUrl = (urlString) => {
-  try {
-    return Boolean(new URL(urlString));
-  } catch (e) {
-    return false;
-  }
-};
-const imageValidation = yup
-  .mixed()
-  .test("fileOrUrl", "Invalid file or URL", (value) => {
-    // Check if value is a file upload or a URL
-    if (!value || (typeof value === "string" && isValidUrl(value))) {
-      // Return true if no file is uploaded or if it's a URL
-      return true;
-    } else if (value && typeof value === "object") {
-      // Check file size and type if it's a file upload
-      if (value.size > 1024 * 1024 * 10) {
-        throw new yup.ValidationError(
-          "File size exceeds the limit of 10MB",
-          value,
-          "photo"
-        );
-      }
-      if (!["image/jpeg", "image/png", "image/gif"].includes(value.type)) {
-        throw new yup.ValidationError(
-          "Invalid file type. Only JPEG, PNG, and GIF are allowed",
-          value,
-          "photo"
-        );
-      }
-      return true;
-    } else {
-      return false;
-    }
-  })
-  .required("Photo is required")
+
+
+
 const AddLocationSchema = yup.object().shape({
   productName: yup.string().required("Product Name is a required field"),
   des: yup.string().required("Description is a required field"),
   price: yup.string().required("Price is required field"),
   color: yup.string().required("Color is required field"),
   badge: yup.boolean().required(),
-  image: imageValidation
+  image: yup.string().required(),
 });
 
 function createSlug(str) {
   // Convert the string to lowercase and replace spaces with hyphens
   return str.toLowerCase().replace(/\s+/g, '-');
 }
-const AddProduct = () => {
+const Product = ({ post }) => {
+  const [progress, setProgress] = useState(0)
+
+  const initialValues = {
+    productName: "",
+    des: "",
+    price: "",
+    color: "",
+    badge: false,
+    image: ""
+  };
 
   const navigate = useNavigate()
-  const handleAddProduct = async (data) => {
-    const slug = createSlug(data.productName)
-    data.slug = slug
-    const file = await appwriteService.uploadFile(data.image);
+  const handleProduct = async (data) => {
+    setProgress(progress+33)
+    if (post) {
+      
+      const file = data.image ? await appwriteService.uploadFile(data.image) : null;
 
-    if (file) {
-      const fileId = file.$id;
-      data.featuredImage = fileId;
-      console.log(data);
-      const dbPost = await appwriteService.createPost({ ...data });
+      if (file) {
+        setProgress(progress+33)
+        appwriteService.deleteFile(post.featuredImage)
+      }
+      const editId = Cookies.get("editId")
+      if(editId){
+        const dbPost = await appwriteService.updatePost(editId, {
+          ...data,
+          featuredImage: file ? file.$id : undefined,
+        });
+  
+        if (dbPost) {
+          setProgress(100)
+          toast.success("Product Edited")
+          navigate("/dashboard");
+        }
+      }else{
+        setProgress(100)
+        toast.error("Edit Id Not Present! Allow all the Cookies")
+      }
+      
+    } else {
+      const slug = createSlug(data.productName)
+      data.slug = slug
+      const file = await appwriteService.uploadFile(data.image);
 
-      if (dbPost) {
-        toast.success("Product Added")
-        navigate("/dashboard");
+      if (file) {
+        setProgress(progress+33)
+        const fileId = file.$id;
+        data.featuredImage = fileId;
+        console.log(data);
+        const dbPost = await appwriteService.createPost({ ...data });
+
+        if (dbPost) {
+          setProgress(100)
+          toast.success("Product Added")
+          navigate("/dashboard");
+        }
       }
     }
+
   }
 
   return (
     <>
       <Toaster />
+      <LoadingBar
+        color='#f11946'
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
       <Formik
-        initialValues={initialValues}
+        initialValues={post ? post : initialValues}
         validationSchema={AddLocationSchema}
-        onSubmit={handleAddProduct}
+        onSubmit={handleProduct}
       >
         {({
           handleSubmit,
@@ -108,6 +117,7 @@ const AddProduct = () => {
           setFieldValue
         }) => (
           <Form noValidate onSubmit={handleSubmit}>
+            {console.log(values)}
             <div className="tabInner innerPages pt-5">
               <div className="innerHeading">
                 <h1>Add Product</h1>
@@ -196,9 +206,9 @@ const AddProduct = () => {
                         {!values.image && (
                           <div className="photo-upload-userIcon">
                             <img
-                              src={UploadImg}
+                              src={UploadImage}
                               alt="..."
-                              style={{ height: "200px", width: "150px", overflow: "hidden" }}
+                              style={{ height: "150px", width: "150px", overflow: "hidden" }}
                             />
                           </div>
                         )}
@@ -284,7 +294,7 @@ const AddProduct = () => {
             </div>
             <div className="border-0 d-flex align-items-center justify-content-end pt-1 pb-3 frmBtns">
               <Button type="submit" className="btn-cust ">
-                Add
+                {post ? "Edit" : "Add"}
               </Button>
             </div>
           </Form>
@@ -293,4 +303,9 @@ const AddProduct = () => {
     </>
   );
 };
-export default AddProduct;
+
+
+Product.propTypes = {
+  post: PropTypes.object,
+};
+export default Product;

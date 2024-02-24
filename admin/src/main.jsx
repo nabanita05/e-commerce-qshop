@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import AddProducts from './pages/AddProducts.jsx';
 import Dashboard from './pages/Dashboard.jsx';
+import EditProducts from './pages/EditProducts.jsx';
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,11 @@ const router = createBrowserRouter([
   {
     path : "/products",
     element : <AddProducts/>
-  }
+  },
+  {
+    path: "/edit-product/:slug",
+    element: <EditProducts />
+},
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -19,7 +19,6 @@ const Sidebar = () => {
     const location = useLocation()
     const navigate = useNavigate()
 
-    console.log(location.pathname);
 
 
     return (

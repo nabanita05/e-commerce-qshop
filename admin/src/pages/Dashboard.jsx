@@ -5,9 +5,12 @@ import Navbar from "../components/Navbar";
 import appwriteService from "../appwrite/config"
 import { useEffect, useState } from "react";
 import DelPng from "../assets/del.png"
-import toast, {Toaster} from "react-hot-toast"
+import toast, { Toaster } from "react-hot-toast"
+import editPng from "../assets/edit.png"
+import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const [data, setdata] = useState([])
+  const naviagte = useNavigate()
   useEffect(() => {
     appwriteService.getPosts([]).then((posts) => {
       if (posts) {
@@ -19,19 +22,19 @@ const Dashboard = () => {
 
   const deletePost = (item) => {
     appwriteService.deletePost(item.$id).then((status) => {
-        if (status) {
-            appwriteService.deleteFile(item.featuredImage);
-           toast.success("Deleted")
-        }
+      if (status) {
+        appwriteService.deleteFile(item.featuredImage);
+        toast.success("Deleted")
+      }
     });
-};
+  };
 
 
 
   return (
 
     <>
-  <Toaster/>
+      <Toaster />
       <div className="bodyArea">
         <Container fluid className="">
           <Row>
@@ -120,8 +123,15 @@ const Dashboard = () => {
                                 </td>
                                 <td><img src={appwriteService.getFilePreview(item.featuredImage)} alt={"image"} className="image-style"
                                 /></td>
-                                <td><img src={DelPng} alt="Delete" title="Delete" className="image-style" style={{cursor : "pointer"}} onClick={()=>deletePost(item)}
-                                /></td>
+                                <td>
+                                  <div style={{ display: 'flex' }}>
+
+                                    <img src={editPng} alt="Edit" title="Edit" className="image-style" style={{ cursor: "pointer", marginRight: '1rem' }} onClick={()=> naviagte(`/edit-product/${item.$id}`)} />
+                                    <img src={DelPng} alt="Delete" title="Delete" className="image-style" style={{ cursor: "pointer" }} onClick={() => deletePost(item)} />
+
+                                  </div>
+                                </td>
+
 
                               </tr>
                             );

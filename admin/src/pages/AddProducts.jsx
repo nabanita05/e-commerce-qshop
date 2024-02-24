@@ -3,7 +3,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar"
-import AddProduct from "../components/AddProducts";
+import AddProduct from "../components/Products";
 import { Toaster } from "react-hot-toast";
 
 const AddProducts = () => {
