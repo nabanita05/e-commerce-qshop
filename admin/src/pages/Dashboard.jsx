@@ -18,13 +18,14 @@ const Dashboard = () => {
         setdata(posts.documents)
       }
     })
-  }, [])
+  }, [data])
 
   const deletePost = (item) => {
     appwriteService.deletePost(item.$id).then((status) => {
       if (status) {
         appwriteService.deleteFile(item.featuredImage);
         toast.success("Deleted")
+        setdata([])
       }
     });
   };

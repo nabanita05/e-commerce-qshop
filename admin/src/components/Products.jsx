@@ -26,7 +26,7 @@ const AddLocationSchema = yup.object().shape({
   price: yup.string().required("Price is required field"),
   color: yup.string().required("Color is required field"),
   badge: yup.boolean().required(),
-  image: yup.string().required(),
+  image: yup.string(),
 });
 
 function createSlug(str) {
@@ -58,6 +58,7 @@ const Product = ({ post }) => {
       }
       const editId = Cookies.get("editId")
       if(editId){
+        console.log(data);
         const dbPost = await appwriteService.updatePost(editId, {
           ...data,
           featuredImage: file ? file.$id : undefined,

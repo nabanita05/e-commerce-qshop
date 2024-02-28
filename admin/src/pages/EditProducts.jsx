@@ -20,6 +20,7 @@ function EditProducts() {
             appwriteService.getPost(slug).then((post) => {
                 if (post) {
                     Cookies.set("editId", post.$id)
+                    console.log(post);
                     setPosts({
                         productName: post.productName,
                         des: post.des,
