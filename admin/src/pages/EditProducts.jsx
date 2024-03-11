@@ -26,6 +26,7 @@ function EditProducts() {
                         des: post.des,
                         price: post.price,
                         color: post.color,
+                        size: post.size,
                         badge: post.badge,
                         featuredImage: post.featuredImage,
                     })
