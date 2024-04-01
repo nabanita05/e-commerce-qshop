@@ -60,11 +60,12 @@ const Dashboard = () => {
                       <Table striped bordered hover>
                         <colgroup>
                           <col style={{ width: '6%' }} />
-                          <col style={{ width: '16%' }} />
-                          <col style={{ width: '30%' }} />
-                          <col style={{ width: '11%' }} />
-                          <col style={{ width: '11%' }} />
-                          <col style={{ width: '6%' }} />
+                          <col style={{ width: '15%' }} />
+                          <col style={{ width: '24%' }} />
+                          <col style={{ width: '10%' }} />
+                          <col style={{ width: '10%' }} />
+                          <col style={{ width: '10%' }} />
+                          <col style={{ width: '5%' }} />
                           <col style={{ width: '20%' }} />
                         </colgroup>
                         <thead>
@@ -83,6 +84,9 @@ const Dashboard = () => {
                             </th>
                             <th>
                               <span>Color</span>
+                            </th>
+                            <th>
+                              <span>Size</span>
                             </th>
                             <th>
                               <span>Badge</span>
@@ -109,6 +113,7 @@ const Dashboard = () => {
                                 <td>{item.des}</td>
                                 <td>₹ {item.price}</td>
                                 <td>{item.color}</td>
+                                <td>{item.size}</td>
                                 <td>
                                   <div className="form-check form-switch ">
                                     <input

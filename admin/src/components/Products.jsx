@@ -25,6 +25,7 @@ const AddLocationSchema = yup.object().shape({
   des: yup.string().required("Description is a required field"),
   price: yup.string().required("Price is required field"),
   color: yup.string().required("Color is required field"),
+  size: yup.string().required("size is required field"),
   badge: yup.boolean().required(),
   image: yup.string(),
 });
@@ -42,7 +43,9 @@ const Product = ({title = "Add Product", post }) => {
     price: "",
     color: "",
     badge: false,
-    image: ""
+    image: "",
+    size:""
+    
   };
 
   const navigate = useNavigate()
@@ -258,24 +261,47 @@ const Product = ({title = "Add Product", post }) => {
                   <Col md={12}>
                     <Form.Group className="mb-3">
                       <Form.Label>Description</Form.Label>
+                      <div className="txtArea1">
+                        <Form.Control
+                          className="txtArea"
+                          as="textarea"
+                          type="text"
+                          placeholder=""
+
+                          name="des"
+                          onChange={handleChange}
+                          value={values.des}
+                          isValid={touched.des && !errors.des}
+                          isInvalid={touched.des && !!errors.des}
+                        />
+                      </div>
+                      <Form.Control.Feedback type="invalid">
+                            {errors.des}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>       
+                  <br/>               
+                  <Col md={12}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Size</Form.Label>
                       <Form.Control
-                        className="txtArea"
-                        as="textarea"
                         type="text"
                         placeholder=""
 
-                        name="des"
+                        name="size"
                         onChange={handleChange}
-                        value={values.des}
-                        isValid={touched.des && !errors.des}
-                        isInvalid={touched.des && !!errors.des}
+                        value={values.size}
+                        isValid={touched.size && !errors.size}
+                        isInvalid={touched.size && !!errors.size}
                       />
-
                       <Form.Control.Feedback type="invalid">
-                        {errors.des}
+                        {errors.size}
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
+
+
+
                   <Col md={12}>
                     <Form.Group className="mb-3">
                       <Form.Label></Form.Label>

@@ -14,7 +14,7 @@ export class Service{
         this.bucket = new Storage(this.client);
     }
 
-    async createPost({slug, productName, des, price, color, badge, featuredImage}){
+    async createPost({slug, productName, des, price, color, size, badge, featuredImage}){
         try {
             const response =  await this.databases.createDocument(
                 conf.appwriteDatabaseId,
@@ -26,6 +26,7 @@ export class Service{
                     des,
                     price,
                     color,
+                    size, 
                     badge,
                     featuredImage,   
                 },
@@ -36,7 +37,7 @@ export class Service{
         }
     }
 
-    async updatePost(slug, {productName, des, price, color, badge, featuredImage}){
+    async updatePost(slug, {productName, des, price, color, size, badge, featuredImage}){
         try {
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
@@ -47,6 +48,7 @@ export class Service{
                     des,
                     price,
                     color,
+                    size, 
                     badge,
                     featuredImage,
 
