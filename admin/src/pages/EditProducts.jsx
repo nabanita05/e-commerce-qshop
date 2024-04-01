@@ -47,7 +47,7 @@ function EditProducts() {
                     <Col md={9} className="mainDv">
                         <Navbar></Navbar>
                         <div className="innerPages">
-                            {post && <EditProduct post = {post}/>}
+                            {post && <EditProduct title = {"Edit Product"} post = {post}/>}
                         </div>
                     </Col>
                 </Row>

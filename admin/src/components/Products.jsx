@@ -33,7 +33,7 @@ function createSlug(str) {
   // Convert the string to lowercase and replace spaces with hyphens
   return str.toLowerCase().replace(/\s+/g, '-');
 }
-const Product = ({ post }) => {
+const Product = ({title = "Add Product", post }) => {
   const [progress, setProgress] = useState(0)
 
   const initialValues = {
@@ -121,7 +121,7 @@ const Product = ({ post }) => {
             {console.log(values)}
             <div className="tabInner innerPages pt-5">
               <div className="innerHeading">
-                <h1>Add Product</h1>
+                <h1>{title}</h1>
               </div>
               <Row>
                 <Col md={6}>
@@ -308,5 +308,6 @@ const Product = ({ post }) => {
 
 Product.propTypes = {
   post: PropTypes.object,
+  title : PropTypes.string,
 };
 export default Product;
