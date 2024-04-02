@@ -32,7 +32,7 @@ const Chatbot = () => {
 
       
       <div
-        className=" flex  fixed bottom-12 right-4 bg-blue-500 text-white p-3 rounded-full cursor-pointer items-center justify-center" style={{ width: "5rem", height: "5rem", fontSize: "2rem" }}
+        className=" flex  fixed bottom-12 right-4 text-white p-3 rounded-full cursor-pointer items-center justify-center" style={{ width: "5rem", height: "5rem", fontSize: "2rem", backgroundColor: "#43b9e8" }}
         onClick={handleChatbotClick}
       >
         🤖

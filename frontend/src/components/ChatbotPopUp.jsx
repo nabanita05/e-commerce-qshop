@@ -1,29 +1,33 @@
 // ChatbotPopUp.js
 import { useSelector } from "react-redux";
 import "./ChatbotPopUp.css";
+import Chatbot from 'react-chatbot-kit';
+import 'react-chatbot-kit/build/main.css';
+import config from "../util/Chatbot/config"
+import ActionProvider from '../util/Chatbot/ActionProvider';
+import MessageParser from '../util/Chatbot/MessageParser';
+
 
 
 
 
 
 const ChatbotPopUp = () => {
-  const visible = useSelector((state) => state.chatbotslice.visible);
+    const visible = useSelector((state) => state.chatbotslice.visible);
 
 
-  return (
-    <div className={`chatbot-popup ${visible ? "chatbot-popup-show" : ""}`}>
-      <div className="chatbot-popup-inner" >
-      <h2>Chatbot Popup</h2>
-        <p>Here is the chatbot popup content.</p>
-        <button onClick={() => console.log("Chatbot button clicked")}>
-          Chatbot
-        </button>
-        <button onClick={() => console.log("Close button clicked")}>
-          Close
-        </button>
-      </div>
-    </div>
-  );
+    return (
+        <div className={`chatbot-popup ${visible ? "chatbot-popup-show" : ""}`}>
+            <div className="chatbot-popup-inner" >
+                <Chatbot
+                    config={config}
+                    messageParser={MessageParser}
+                    actionProvider={ActionProvider}
+                />
+            </div>
+        </div>
+
+    );
 };
 
 export default ChatbotPopUp;

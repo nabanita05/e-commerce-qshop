@@ -4,7 +4,6 @@
     min-width: 300px;
     background-color: white;
     color: #000;
-    text-align: center;
     border-radius: 6px;
     padding: 16px;
     position: fixed;
@@ -23,3 +22,13 @@
   .chatbot-popup-inner {
     margin: 0;
   }
+
+  .ADE {
+    background-color: #c77aca;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    color: white;
+    border-radius: 100%;
+}
