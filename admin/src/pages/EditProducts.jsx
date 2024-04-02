@@ -23,6 +23,7 @@ function EditProducts() {
                     console.log(post);
                     setPosts({
                         productName: post.productName,
+                        category : post.category,
                         des: post.des,
                         price: post.price,
                         color: post.color,

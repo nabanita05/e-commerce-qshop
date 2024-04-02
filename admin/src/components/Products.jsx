@@ -22,19 +22,21 @@ import { useState } from "react";
 
 const AddLocationSchema = yup.object().shape({
   productName: yup.string().required("Product Name is a required field"),
+  category: yup.string().required("Category is a required field"),
   des: yup.string().required("Description is a required field"),
   price: yup.string().required("Price is required field"),
   color: yup.string().required("Color is required field"),
   size: yup.string().required("size is required field"),
   badge: yup.boolean().required(),
   image: yup.string(),
+
 });
 
 function createSlug(str) {
   // Convert the string to lowercase and replace spaces with hyphens
   return str.toLowerCase().replace(/\s+/g, '-');
 }
-const Product = ({title = "Add Product", post }) => {
+const Product = ({ title = "Add Product", post }) => {
   const [progress, setProgress] = useState(0)
 
   const initialValues = {
@@ -44,46 +46,47 @@ const Product = ({title = "Add Product", post }) => {
     color: "",
     badge: false,
     image: "",
-    size:""
-    
+    size: "",
+    category: ""
+
   };
 
   const navigate = useNavigate()
   const handleProduct = async (data) => {
-    setProgress(progress+33)
+    setProgress(progress + 33)
     if (post) {
-      
+
       const file = data.image ? await appwriteService.uploadFile(data.image) : null;
 
       if (file) {
-        setProgress(progress+33)
+        setProgress(progress + 33)
         appwriteService.deleteFile(post.featuredImage)
       }
       const editId = Cookies.get("editId")
-      if(editId){
+      if (editId) {
         console.log(data);
         const dbPost = await appwriteService.updatePost(editId, {
           ...data,
           featuredImage: file ? file.$id : undefined,
         });
-  
+
         if (dbPost) {
           setProgress(100)
           toast.success("Product Edited")
           navigate("/dashboard");
         }
-      }else{
+      } else {
         setProgress(100)
         toast.error("Edit Id Not Present! Allow all the Cookies")
       }
-      
+
     } else {
       const slug = createSlug(data.productName)
       data.slug = slug
       const file = await appwriteService.uploadFile(data.image);
 
       if (file) {
-        setProgress(progress+33)
+        setProgress(progress + 33)
         const fileId = file.$id;
         data.featuredImage = fileId;
         console.log(data);
@@ -144,6 +147,27 @@ const Product = ({title = "Add Product", post }) => {
                       />
                       <Form.Control.Feedback type="invalid">
                         {errors.productName}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                  <Col md={12}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Product Category</Form.Label>
+                      <Form.Select
+                        name="category"
+                        onChange={handleChange}
+                        value={values.category}
+                        isValid={touched.category && !errors.category}
+                        isInvalid={touched.category && !!errors.category}
+                        defaultValue=""
+                      >
+                      <option disabled value="">Select</option>
+                      <option value="Grocery">Grocery</option>
+                      <option value="Others">Others</option>
+                      </Form.Select>
+                      
+                      <Form.Control.Feedback type="invalid">
+                        {errors.category}
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
@@ -276,11 +300,11 @@ const Product = ({title = "Add Product", post }) => {
                         />
                       </div>
                       <Form.Control.Feedback type="invalid">
-                            {errors.des}
+                        {errors.des}
                       </Form.Control.Feedback>
                     </Form.Group>
-                  </Col>       
-                  <br/>               
+                  </Col>
+                  
                   <Col md={12}>
                     <Form.Group className="mb-3">
                       <Form.Label>Size</Form.Label>
@@ -334,6 +358,6 @@ const Product = ({title = "Add Product", post }) => {
 
 Product.propTypes = {
   post: PropTypes.object,
-  title : PropTypes.string,
+  title: PropTypes.string,
 };
 export default Product;

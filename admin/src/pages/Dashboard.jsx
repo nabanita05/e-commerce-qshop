@@ -59,14 +59,16 @@ const Dashboard = () => {
                     ) : (
                       <Table striped bordered hover>
                         <colgroup>
-                          <col style={{ width: '6%' }} />
-                          <col style={{ width: '15%' }} />
-                          <col style={{ width: '24%' }} />
+                          <col style={{ width: '5%' }} />
                           <col style={{ width: '10%' }} />
                           <col style={{ width: '10%' }} />
                           <col style={{ width: '10%' }} />
                           <col style={{ width: '5%' }} />
-                          <col style={{ width: '20%' }} />
+                          <col style={{ width: '10%' }} />
+                          <col style={{ width: '10%' }} />
+                          <col style={{ width: '10%' }} />
+                          <col style={{ width: '25%' }} />
+                          <col style={{ width: '5%' }} />
                         </colgroup>
                         <thead>
                           <tr>
@@ -75,6 +77,9 @@ const Dashboard = () => {
                             </th>
                             <th>
                               <span>Product Name</span>
+                            </th>
+                            <th>
+                              <span>Category</span>
                             </th>
                             <th>
                               <span>Description</span>
@@ -110,6 +115,7 @@ const Dashboard = () => {
                               <tr key={index} className={item.badge ? "" : "inactive"}>
                                 <td>{index + 1}.</td>
                                 <td>{item.productName}</td>
+                                <td>{item.category}</td>
                                 <td>{item.des}</td>
                                 <td>₹ {item.price}</td>
                                 <td>{item.color}</td>
@@ -127,7 +133,7 @@ const Dashboard = () => {
 
                                   </div>
                                 </td>
-                                <td><img src={appwriteService.getFilePreview(item.featuredImage)} alt={"image"} className="image-style"
+                                <td><img src={appwriteService.getFilePreview(item.featuredImage)} alt={"image"} className="image-style1"
                                 /></td>
                                 <td>
                                   <div style={{ display: 'flex' }}>
