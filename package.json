@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@nlux/openai-react": "^1.0.5",
-    "@nlux/react": "^1.0.5"
-  }
-}
