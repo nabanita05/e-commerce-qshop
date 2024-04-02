@@ -24,6 +24,7 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Offer from "./pages/Offer/Offer";
 import Footer from "./components/Home/Footer/Footer";
 import FooterBottom from "./components/Home/Footer/FooterBottom";
+import Chatbot from "./components/Chatbot";
 
 const Layout = () => {
   return (
@@ -33,6 +34,7 @@ const Layout = () => {
       <SpecialCase />
       <ScrollRestoration/>
       <Outlet />
+      <Chatbot/>
       <Footer/>
       <FooterBottom/>
       
