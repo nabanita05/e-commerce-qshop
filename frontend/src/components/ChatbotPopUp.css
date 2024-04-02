@@ -1,6 +1,7 @@
 /* ChatbotPopUp.css */
 .chatbot-popup {
     visibility: hidden;
+    min-width: 300px;
     background-color: white;
     color: #000;
     text-align: center;
