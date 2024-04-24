@@ -304,8 +304,8 @@ const Product = ({ title = "Add Product", post }) => {
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
-                  
-                  <Col md={12}>
+                  <Row style={{marginTop: "1.7rem"}}>
+                  <Col md={6}>
                     <Form.Group className="mb-3">
                       <Form.Label>Size</Form.Label>
                       <Form.Control
@@ -323,10 +323,7 @@ const Product = ({ title = "Add Product", post }) => {
                       </Form.Control.Feedback>
                     </Form.Group>
                   </Col>
-
-
-
-                  <Col md={12}>
+                  <Col md={6}>
                     <Form.Group className="mb-3">
                       <Form.Label></Form.Label>
                       <Form.Check
@@ -340,6 +337,12 @@ const Product = ({ title = "Add Product", post }) => {
                       />
                     </Form.Group>
                   </Col>
+                  </Row>
+                  
+
+
+
+                  
                 </Col>
               </Row>
             </div>
