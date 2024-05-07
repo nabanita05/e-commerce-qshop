@@ -10,6 +10,7 @@ const ProductDetails = () => {
   const [productInfo, setProductInfo] = useState([]);
 
   useEffect(() => {
+    console.log("rendered");
     setProductInfo(location.state.item);
     setPrevLocation(location.pathname);
   }, [location, productInfo]);

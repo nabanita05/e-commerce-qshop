@@ -22,10 +22,12 @@ const Product = (props) => {
     return String(_id).toLowerCase().split(" ").join("");
   };
   const rootId = idString(_id);
+  
 
   const navigate = useNavigate();
   const productItem = props;
   const handleProductDetails = () => {
+    console.log(productItem);
     navigate(`/product/${rootId}`, {
       state: {
         item: productItem,

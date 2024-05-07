@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
-import  { useState } from "react";
+import { useState } from "react";
 import ReactPaginate from "react-paginate";
 import Product from "../../Home/Products/Product.jsx";
-import { paginationItems } from "../../../constants";
+// import { paginationItems } from "../../../constants";
+import { useEffect } from "react";
+import appwriteService from "../../../appwrite/productListing.js"
 
-const items = paginationItems;
+
 function Items({ currentItems }) {
   return (
     <>
@@ -31,6 +33,8 @@ const Pagination = ({ itemsPerPage }) => {
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
   const [itemStart, setItemStart] = useState(1);
+  const [items, setItems] = useState([])
+  let imageArray = [];
 
   // Simulate fetching items from another resources.
   // (This could be items from props; or items loaded in a local state
@@ -49,6 +53,41 @@ const Pagination = ({ itemsPerPage }) => {
     // );
     setItemStart(newOffset);
   };
+
+  useEffect(() => {
+    (async () => {
+      await appwriteService.getPosts([]).then((posts)=>{
+        console.log(posts.documents);
+        posts.documents.map((ele)=>{
+          imageArray.push(appwriteService.getFilePreview(ele.featuredImage).href)
+        })
+        console.log(imageArray);
+        return posts;
+      }).then((posts) => {
+        if (posts) {
+          const temp = [];
+          posts.documents.map((ele, index) => {
+            temp.push(
+              {
+                _id: ele.$id,
+                img: imageArray[index],
+                productName: ele.productName,
+                price: ele.price,
+                color: ele.color,
+                badge: ele.badge,
+                des: ele.des,
+              }
+            )
+          })
+          setItems(temp)
+        }
+      })
+      .catch((error)=>{
+        console.log(error, "Can't fetch products from appwrite server");
+      })
+    })();
+  }, [])
+
 
   return (
     <div>

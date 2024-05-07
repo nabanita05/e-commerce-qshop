@@ -11,14 +11,18 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const [data, setdata] = useState([])
   const naviagte = useNavigate()
+
   useEffect(() => {
-    appwriteService.getPosts([]).then((posts) => {
-      if (posts) {
-        console.log(posts.documents);
-        setdata(posts.documents)
-      }
-    })
-  }, [data])
+    (async()=>{
+      await appwriteService.getPosts([]).then((posts) => {
+        if (posts) {
+          console.log(posts.documents);
+          setdata(posts.documents)
+        }
+      })
+    })();
+    
+  }, [])
 
   const deletePost = (item) => {
     appwriteService.deletePost(item.$id).then((status) => {
