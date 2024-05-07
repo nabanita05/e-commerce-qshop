@@ -1,54 +1,71 @@
 
 import Heading from "../Products/Heading.jsx";
 import Product from "../Products/Product";
-import {
-  spfOne,
-  spfTwo,
-  spfThree,
-  spfFour,
-} from "../../../assets/images/index";
+import { useEffect, useState } from "react";
+import appwriteService from "../../../appwrite/productListing.js"
 
 const SpecialOffers = () => {
+  let imageArray = []
+  const [items, setItems] = useState([])
+
+  useEffect(() => {
+    (async () => {
+      await appwriteService.getPosts([]).then((posts) => {
+        console.log(posts.documents);
+        posts.documents.map((ele) => {
+          imageArray.push(appwriteService.getFilePreview(ele.featuredImage).href)
+        })
+        return posts;
+      }).then((posts) => {
+        if (posts) {
+          const temp = [];
+          posts.documents.map((ele, index) => {
+            if (ele.badge) {
+              temp.push(
+                {
+                  _id: ele.$id,
+                  img: imageArray[index],
+                  productName: ele.productName,
+                  price: ele.price,
+                  color: ele.color,
+                  badge: ele.badge,
+                  des: ele.des,
+                }
+              )
+            }
+          })
+          setItems(temp)
+        }
+      })
+        .catch((error) => {
+          console.log(error, "Can't fetch products from appwrite server");
+        })
+    })();
+  }, [])
+
+  console.log(items);
+
+
+
   return (
     <div className="w-full pb-20">
       <Heading heading="Special Offers" />
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lgl:grid-cols-3 xl:grid-cols-4 gap-10">
-        <Product
-          _id="1101"
-          img={spfOne}
-          productName="Cap for Boys"
-          price="35.00"
-          color="Blank and White"
-          badge={true}
-          des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis."
-        />
-        <Product
-          _id="1102"
-          img={spfTwo}
-          productName="Tea Table"
-          price="180.00"
-          color="Gray"
-          badge={true}
-          des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis."
-        />
-        <Product
-          _id="1103"
-          img={spfThree}
-          productName="Headphones"
-          price="25.00"
-          color="Mixed"
-          badge={true}
-          des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis."
-        />
-        <Product
-          _id="1104"
-          img={spfFour}
-          productName="Sun glasses"
-          price="220.00"
-          color="Black"
-          badge={true}
-          des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis."
-        />
+        {items && items.map((item, index) => {
+          return (
+            <Product
+              _id={item._id}
+              img={item.img}
+              productName={item.productName}
+              price={item.price}
+              color={item.color}
+              badge={item.badge}
+              des={item.des}
+              key={index}
+            />
+          );
+        })}
+        
       </div>
     </div>
   );
