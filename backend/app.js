@@ -7,10 +7,9 @@ config({ path: "./config/config.env" });
 export const app = express();
 
 app.use(cors(
-  //need to change the uri
   {
-    origin: ["http://localhost:5173"],
-    methos: ["POST", "GET"],
+    origin: ["http://localhost:5174", "http://localhost:5713"],
+    methods: ["POST", "GET"], // Corrected spelling of 'methods'
     credentials: true,
   }
 ));
