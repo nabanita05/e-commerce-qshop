@@ -4,18 +4,19 @@ import { FaSearch, FaUser, FaCaretDown, FaShoppingCart } from "react-icons/fa";
 import Flex from "../../designLayouts/Flex";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { paginationItems } from "../../../constants";
 import authService from "../../../appwrite/auth";
 import toast, { Toaster } from "react-hot-toast";
 import LoadingBar from 'react-top-loading-bar';
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/authSlice";
 import { BsSuitHeartFill } from "react-icons/bs";
+import appwriteService from "../../../appwrite/productListing.js"
 
 const HeaderBottom = () => {
   //User Logged In or Not
   const [data, setData] = useState("Log In!");
   const [loggedIn, setloggedIn] = useState(false)
+  let imageArray = [];
   const fetchData = async () => {
     try {
       const userData = await authService.getCurrentUser();
@@ -88,17 +89,52 @@ const HeaderBottom = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [items, setItems] = useState([])
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
 
   useEffect(() => {
-    const filtered = paginationItems.filter((item) =>
+    const filtered = items.filter((item) =>
       item.productName.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredProducts(filtered);
-  }, [searchQuery]);
+  }, [searchQuery, items]);
+
+  useEffect(() => {
+    (async () => {
+      await appwriteService.getPosts([]).then((posts)=>{
+        console.log(posts.documents);
+        posts.documents.map((ele)=>{
+          imageArray.push(appwriteService.getFilePreview(ele.featuredImage).href)
+        })
+        console.log(imageArray);
+        return posts;
+      }).then((posts) => {
+        if (posts) {
+          const temp = [];
+          posts.documents.map((ele, index) => {
+            temp.push(
+              {
+                _id: ele.$id,
+                img: imageArray[index],
+                productName: ele.productName,
+                price: ele.price,
+                color: ele.color,
+                badge: ele.badge,
+                des: ele.des,
+              }
+            )
+          })
+          setItems(temp)
+        }
+      })
+      .catch((error)=>{
+        console.log(error, "Can't fetch products from appwrite server");
+      })
+    })();
+  }, [])
 
   return (
     <>
