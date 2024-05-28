@@ -28,6 +28,7 @@ const Product = (props) => {
   const productItem = props;
   const handleProductDetails = () => {
     console.log(productItem);
+    console.log(rootId);
     navigate(`/product/${rootId}`, {
       state: {
         item: productItem,
