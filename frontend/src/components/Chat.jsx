@@ -8,6 +8,8 @@ import Message from './Message';
 
 const Chat = ({ messages, setMessages, isOpen, setIsOpne, handleChatbotClick }) => {
   const [isTyping, setIsTyping] = useState(false)
+const Chat = ({ messages, setMessages, isOpen, setIsOpne, handleChatbotClick }) => {
+  const [isTyping, setIsTyping] = useState(false)
 
   const handleSendMessage = (text, sender) => {
     const newMessage = { text, sender };
@@ -109,6 +111,7 @@ const Chat = ({ messages, setMessages, isOpen, setIsOpne, handleChatbotClick }) 
 
 
   return (
+  return (
     messages &&
     <div className="chat-container">
       <div className="chat-window">
@@ -123,6 +126,7 @@ const Chat = ({ messages, setMessages, isOpen, setIsOpne, handleChatbotClick }) 
       </div>
       <ChatInput onSendMessage={handleSendMessage} />
     </div>
+  );
   );
 };
 
