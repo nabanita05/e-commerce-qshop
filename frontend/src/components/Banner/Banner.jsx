@@ -1,5 +1,5 @@
 import  { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import {
   bannerImgOne,
@@ -10,6 +10,7 @@ import Image from "../designLayouts/Image";
 
 const Banner = () => {
   const [dotActive, setDocActive] = useState(0);
+  const navigate = useNavigate();
   const settings = {
     dots: true,
     infinite: true,
@@ -102,11 +103,26 @@ const Banner = () => {
   return (
     <div className="w-full bg-white">
       <Slider {...settings}>
-        <Link to="/offer">
+        <div onClick={()=>{
+          navigate(`/product/headphones`, {
+            state: {
+              item: {
+                _id: 'headphones',
+                img: 
+                  'https://cloud.appwrite.io/v1/storage/buckets/65d3672d7f1a65bb7265/files/665636b5652aec8d734d/preview?project=65804aa9a44bb3ce522f',
+                productName: 'Headphones',
+                price: '3999',
+                color: 'Others',
+                badge: true,
+                des: 'JBL EVEREST 310GA ON-EAR WIRELESS HEADPHONES (SILVER)'
+              },
+            },
+          });
+        }}>
           <div>
             <Image imgSrc={bannerImgOne} />
           </div>
-        </Link>
+        </div>
         <Link to="/offer">
           <div>
             <Image imgSrc={bannerImgTwo} />

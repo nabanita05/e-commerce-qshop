@@ -37,7 +37,7 @@ const Chatbot = () => {
       >
         🤖
       </div>
-      {isOpen && <ChatbotPopUp />}
+      {isOpen && <ChatbotPopUp isOpen={isOpen} setIsOpen={setIsOpen} handleChatbotClick={handleChatbotClick}/>}
     </>
   );
 };

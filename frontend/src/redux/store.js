@@ -15,6 +15,7 @@ import authSlice from "./authSlice";
 import wishList from "./wishList";
 import amountSlice from "./amountSlice";
 import chatbotslice from "./chatbotslice";
+import filteringSlice from "./filteringSlice";
 
 const persistConfig = {
   key: "root",
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
   auth: authSlice,
   wishlist : wishList,
   amountpay : amountSlice,
-  chatbotslice : chatbotslice
+  chatbotslice : chatbotslice,
+  filteringSlice : filteringSlice
 });
 
 export const store = configureStore({

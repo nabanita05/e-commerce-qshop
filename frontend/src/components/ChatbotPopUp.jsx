@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 // ChatbotPopUp.js
 import { useSelector } from "react-redux";
 import "./ChatbotPopUp.css";
@@ -12,7 +13,7 @@ import authService from "../appwrite/auth";
 
 
 
-const ChatbotPopUp = () => {
+const ChatbotPopUp = ({handleChatbotClick}) => {
     const visible = useSelector((state) => state.chatbotslice.visible);
     const [messages, setMessages] = useState([
         { text: 'Welcome user', sender: 'user2' }
@@ -61,7 +62,7 @@ const ChatbotPopUp = () => {
         userName &&
         <div className={`chatbot-popup ${visible ? "chatbot-popup-show" : ""}`}>
             <div className="chatbot-popup-inner" >
-               <Chat messages={messages} setMessages={setMessages} />
+               <Chat messages={messages} setMessages={setMessages} handleChatbotClick={handleChatbotClick}/>
             </div>
         </div>
 

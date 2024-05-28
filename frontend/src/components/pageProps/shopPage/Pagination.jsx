@@ -5,12 +5,13 @@ import Product from "../../Home/Products/Product.jsx";
 // import { paginationItems } from "../../../constants";
 import { useEffect } from "react";
 import appwriteService from "../../../appwrite/productListing.js"
+import { useSelector } from "react-redux";
 
 
 function Items({ currentItems }) {
   return (
     <>
-      {currentItems &&
+      {currentItems.length > 0 ?
         currentItems.map((item) => (
           <div key={item._id} className="w-full">
             <Product
@@ -23,7 +24,7 @@ function Items({ currentItems }) {
               des={item.des}
             />
           </div>
-        ))}
+        )) : <h2>Sorry! No Item Found</h2>}
     </>
   );
 }
@@ -35,6 +36,11 @@ const Pagination = ({ itemsPerPage }) => {
   const [itemStart, setItemStart] = useState(1);
   const [items, setItems] = useState([])
   let imageArray = [];
+  const [godData, setGodData] = useState([])
+
+  const filteredCategory = useSelector(state => state.filteringSlice.category)
+  const filteredColor = useSelector(state => state.filteringSlice.color)
+  console.log(filteredCategory);
 
   // Simulate fetching items from another resources.
   // (This could be items from props; or items loaded in a local state
@@ -56,12 +62,12 @@ const Pagination = ({ itemsPerPage }) => {
 
   useEffect(() => {
     (async () => {
-      await appwriteService.getPosts([]).then((posts)=>{
-        console.log(posts.documents);
-        posts.documents.map((ele)=>{
+      await appwriteService.getPosts([]).then((posts) => {
+
+        posts.documents.map((ele) => {
           imageArray.push(appwriteService.getFilePreview(ele.featuredImage).href)
         })
-        console.log(imageArray);
+       
         return posts;
       }).then((posts) => {
         if (posts) {
@@ -76,17 +82,34 @@ const Pagination = ({ itemsPerPage }) => {
                 color: ele.color,
                 badge: ele.badge,
                 des: ele.des,
+                category: ele.category
               }
             )
           })
           setItems(temp)
+          setGodData(temp)
         }
       })
-      .catch((error)=>{
-        console.log(error, "Can't fetch products from appwrite server");
-      })
+        .catch((error) => {
+          console.log(error, "Can't fetch products from appwrite server");
+        })
     })();
   }, [])
+
+  useEffect(() => {
+    if (filteredCategory != "" && filteredCategory != "All") {
+      const filteredItems = godData.filter((ele) => (ele.category == filteredCategory))
+      console.log(filteredItems);
+      setItems(filteredItems)
+    }else if(filteredCategory== "All" || filteredColor == "All"){
+      setItems(godData)
+    }else if(filteredColor != ""){
+      const filteredItems = godData.filter((ele) => (ele.color == filteredColor))
+      console.log(filteredItems);
+      setItems(filteredItems) 
+    }
+  }, [filteredCategory, filteredColor])
+
 
 
   return (

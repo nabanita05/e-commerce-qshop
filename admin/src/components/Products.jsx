@@ -163,6 +163,8 @@ const Product = ({ title = "Add Product", post }) => {
                       >
                       <option disabled value="">Select</option>
                       <option value="Grocery">Grocery</option>
+                      <option value="Electronics">Electronics</option>
+                      <option value="Garments">Garments</option>
                       <option value="Others">Others</option>
                       </Form.Select>
                       
@@ -192,16 +194,23 @@ const Product = ({ title = "Add Product", post }) => {
                   <Col md={12}>
                     <Form.Group className="mb-3">
                       <Form.Label>Color</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder=""
-
+                      <Form.Select
                         name="color"
                         onChange={handleChange}
                         value={values.color}
                         isValid={touched.color && !errors.color}
                         isInvalid={touched.color && !!errors.color}
-                      />
+                        defaultValue=""
+                      >
+                      <option disabled value="">Select</option>
+                      <option value="Grocery">Green</option>
+                      <option value="Red">Red</option>
+                      <option value="Blue">Blue</option>
+                      <option value="Yellow">Yellow</option>
+                      <option value="White">White</option>
+                      <option value="Black">Black</option>
+                      <option value="Others">Others</option>
+                      </Form.Select>
                       <Form.Control.Feedback type="invalid">
                         {errors.color}
                       </Form.Control.Feedback>
