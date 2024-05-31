@@ -11,6 +11,7 @@ const PaymentSuccess = () => {
   const [userName, setUserName] = useState("Unknown!");
   const [orderDetails, setOrderDetails] = useState(null);
   const [paymentDetails, setPaymentDetails] = useState(null);
+  const [pdfDownload, setPdfDownload] = useState(false)
 
   const searchQuery = useSearchParams()[0];
   const referenceNum = searchQuery.get("reference");
@@ -92,6 +93,7 @@ const PaymentSuccess = () => {
 
   // Master function to get all the details
   const getAllDetails = async () => {
+    setPdfDownload(true)
     getPaymentDetails();
     getOrder();
   };
@@ -104,7 +106,7 @@ const PaymentSuccess = () => {
         progress={progress}
         onLoaderFinished={() => setProgress(0)}
       />
-      <div className="max-w-md mx-auto bg-white p-8 rounded-md shadow-md">
+      <div className="max-w-md mx-auto bg-white p-8 rounded-md shadow-md" style={{overflowX: "scroll"}}>
         <h1 className="text-3xl font-bold mb-4">Order Successful</h1>
         <p className="text-gray-500 mb-4">{referenceNum}</p>
         <div className="mb-4">
@@ -128,6 +130,7 @@ const PaymentSuccess = () => {
           </div>
         )}
         <button
+         style={{ display: !pdfDownload ? "none" : "" }}
           className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
           onClick={createAndDownloadPdf}
         >

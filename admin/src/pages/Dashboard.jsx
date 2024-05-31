@@ -10,6 +10,7 @@ import editPng from "../assets/edit.png"
 import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const [data, setdata] = useState([])
+  const [noOfProducts, setNoOfProducts] = useState("")
   const naviagte = useNavigate()
 
   useEffect(() => {
@@ -17,6 +18,7 @@ const Dashboard = () => {
       await appwriteService.getPosts([]).then((posts) => {
         if (posts) {
           console.log(posts.documents);
+          setNoOfProducts(posts.documents.length)
           setdata(posts.documents)
         }
       })
@@ -52,6 +54,7 @@ const Dashboard = () => {
               <div className="innerPages">
                 <div className="innerHeading d-flex justify-content-between align-items-center">
                   <h1>Product Listing</h1>
+                  <h1>No Of Products : {noOfProducts}</h1>
 
                 </div>
                 <div className="listingTableDv">
