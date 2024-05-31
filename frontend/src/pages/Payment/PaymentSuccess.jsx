@@ -1,4 +1,4 @@
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link,  useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import { saveAs } from 'file-saver';
@@ -16,7 +16,6 @@ const PaymentSuccess = () => {
   const searchQuery = useSearchParams()[0];
   const referenceNum = searchQuery.get("reference");
 
-  const navigate = useNavigate()
 
   // Fetch user name
   const fetchData = async () => {
