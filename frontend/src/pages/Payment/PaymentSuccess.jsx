@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import { saveAs } from 'file-saver';
@@ -15,6 +15,8 @@ const PaymentSuccess = () => {
 
   const searchQuery = useSearchParams()[0];
   const referenceNum = searchQuery.get("reference");
+
+  const navigate = useNavigate()
 
   // Fetch user name
   const fetchData = async () => {
@@ -129,13 +131,23 @@ const PaymentSuccess = () => {
             <p className="text-sm">Shipping Charge: {orderDetails.shippingFee}</p>
           </div>
         )}
-        <button
-         style={{ display: !pdfDownload ? "none" : "" }}
-          className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
-          onClick={createAndDownloadPdf}
-        >
-          Download PDF
-        </button>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+  <button
+    style={{ display: !pdfDownload ? "none" : "", marginRight: "auto" }}
+    className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+    onClick={createAndDownloadPdf}
+  >
+    Download PDF
+  </button>
+  <Link
+ 
+  className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+  to={"/"} // Replace this with the appropriate route for your home page
+> 
+  Back to home
+</Link>
+</div>
+       
       </div>
     </div>
   );
