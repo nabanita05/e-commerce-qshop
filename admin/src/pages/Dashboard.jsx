@@ -17,8 +17,8 @@ const Dashboard = () => {
     (async()=>{
       await appwriteService.getPosts([]).then((posts) => {
         if (posts) {
-          console.log(posts.documents);
-          setNoOfProducts(posts.documents.length)
+          console.log(posts);
+          setNoOfProducts(posts.total)
           setdata(posts.documents)
         }
       })
@@ -69,12 +69,13 @@ const Dashboard = () => {
                           <col style={{ width: '5%' }} />
                           <col style={{ width: '10%' }} />
                           <col style={{ width: '10%' }} />
-                          <col style={{ width: '10%' }} />
+                          <col style={{ width: '15%' }} />
                           <col style={{ width: '5%' }} />
                           <col style={{ width: '10%' }} />
+                          <col style={{ width: '5%' }} />
+                          <col style={{ width: '5%' }} />
                           <col style={{ width: '10%' }} />
-                          <col style={{ width: '10%' }} />
-                          <col style={{ width: '25%' }} />
+                          <col style={{ width: '20%' }} />
                           <col style={{ width: '5%' }} />
                         </colgroup>
                         <thead>
@@ -99,6 +100,9 @@ const Dashboard = () => {
                             </th>
                             <th>
                               <span>Size</span>
+                            </th>
+                            <th>
+                              <span>Items</span>
                             </th>
                             <th>
                               <span>Badge</span>
@@ -127,6 +131,7 @@ const Dashboard = () => {
                                 <td>₹ {item.price}</td>
                                 <td>{item.color}</td>
                                 <td>{item.size}</td>
+                                <td>{item.noOfItems}</td>
                                 <td>
                                   <div className="form-check form-switch ">
                                     <input
